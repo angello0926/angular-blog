@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="BlogApp">
+<head>
+  <meta charset="utf-8">
+  <title>Angular Blog</title>
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/jquery/dist/jquery.js"></script>
+  <script src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/controllers/BlogController.js"></script>
+  <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+
+</head>
+<body ng-controller="BlogController">
+  <header>
+    <div class="webtitle">
+      <h1>Angular Blog App</h1>
+    </div>
+    <nav>
+      <ul>
+        <li ng-click="read=true"> READ</li>
+        <li ng-click="read=false"> CREATE</li>
+      </ul>
+    </nav>
+
+  </header>
+
+
+  <div class="blogpost" ng-repeat="post in posts" ng-hide="!read">
+    <h3>{{post.title}}</h3>
+    <p>{{post.content}}</p>
+    <h5>by <span> {{post.author}}</span></h5>
+    <div class="glyphicon glyphicon-trash pull-right" ng-click="delete($index) "></div>
+    <div class="glyphicon glyphicon-edit pull-right" ng-click="show($index)"></div>
+    <br>
+  </div>
+
+  <div  id="modalupdate" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Post </h4>
+        </div>
+        <div class="modal-body">
+          <input ng-model="newPost.title" ng-init="newPost.title">
+          <input ng-model="newPost.author" ng-init="newPost.author">
+          <textarea type="text" id="content" name="content" ng-model="newPost.content"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal" ng-click="savePost()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <form class="create" ng-submit="addpost()" ng-hide="read">
+    <input type="text" name="title" placeholder="Title" ng-model="newPost.title">
+    <input type="text" name="author" placeholder="Author" ng-model="newPost.author">
+    <textarea type="text" id="content" name="content" placeholder="Content" ng-model="newPost.content"></textarea>
+    <br>
+    <br>
+    <button class="btn btn-success" type="submit">submit new post</button>
+  </form>
+
+
+
+</body>
+
+
